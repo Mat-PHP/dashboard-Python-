@@ -1,0 +1,48 @@
+mport dash
+from dash import dcc, html
+import plotly.graph_objs as go
+
+# Simulando dados
+categorias = ['Aluguel', 'Comida', 'Transporte', 'Lazer', 'Outros']
+gastos = [1200, 600, 300, 200, 100]
+retornos = [300, 150, 50, 20, 10]
+
+# Inicializa o app Dash
+app = dash.Dash(__name__)
+
+# Layout do dashboard
+app.layout = html.Div([
+    html.H1("Dashboard Financeiro", style={'textAlign': 'center'}),
+
+    html.Div([
+        dcc.Graph(
+            id='grafico-gastos',
+            figure={
+                'data': [go.Bar(x=categorias, y=gastos, marker_color='crimson')],
+                'layout': go.Layout(
+                    title='Gastos por Categoria',
+                    xaxis={'title': 'Categoria'},
+                    yaxis={'title': 'Valor (R$)'}
+                )
+            }
+        ),
+    ], style={'width': '48%', 'display': 'inline-block'}),
+
+    html.Div([
+        dcc.Graph(
+            id='grafico-retornos',
+            figure={
+                'data': [go.Bar(x=categorias, y=retornos, marker_color='green')],
+                'layout': go.Layout(
+                    title='Retornos por Categoria',
+                    xaxis={'title': 'Categoria'},
+                    yaxis={'title': 'Valor (R$)'}
+                )
+            }
+        ),
+    ], style={'width': '48%', 'display': 'inline-block', 'float': 'right'}),
+])
+
+# Roda o app
+if __name__ == '__main__':
+    app.run_server(debug=True)
